@@ -1,0 +1,9 @@
+[submodule "migration/files/sensu-1.x-filter-wrapper"]
+	path = migration/files/sensu-1.x-filter-wrapper
+	url = https://github.com/sensu/sensu-1.x-filter-wrapper.git
+[submodule "migration/files/sensu-plugins-logs"]
+	path = migration/files/sensu-plugins-logs
+	url = https://github.com/jspaleta/sensu-plugins-logs.git
+[submodule "migration/files/sensu-plugin"]
+	path = migration/files/sensu-plugin
+	url = https://github.com/jspaleta/sensu-plugin.git

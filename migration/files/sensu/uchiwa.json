@@ -1,0 +1,31 @@
+{
+  "sensu": [
+    {
+      "name": "summit-migration-1.x",
+      "host": "127.0.0.1",
+      "port": 4567,
+      "timeout": 10
+    }
+  ],
+  "uchiwa": {
+    "host": "0.0.0.0",
+    "port": 3000,
+    "refresh": 10,
+    "users": [
+      {
+        "username" : "admin",
+        "password": "admin",
+        "accessToken": "admin::uchiwa::migration::1x__",
+        "readonly": false
+      },
+      {
+        "username" : "guest",
+        "password": "guest",
+        "accessToken": "guest::uchiwa::migration::1x__",
+        "readonly": true
+      }
+    ]
+
+  }
+}
+

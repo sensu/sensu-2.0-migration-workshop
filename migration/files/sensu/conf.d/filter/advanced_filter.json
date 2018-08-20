@@ -1,0 +1,20 @@
+{
+  "filters": {
+    "advanced_filter": {
+      "negate": false,
+      "attributes": {
+        "client": {
+          "status_url": "eval: require 'net/http'; value == nil || '200' == Net::HTTP.get_response(URI.parse(value.to_s)).code rescue false"
+        }
+      }
+    },
+    "advanced_negate_filter": {
+      "negate": true,
+      "attributes": {
+        "client": {
+          "status_url": "eval: require 'net/http'; value == nil || '200' == Net::HTTP.get_response(URI.parse(value.to_s)).code rescue false"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,111 @@
+# Add the Sensu Beta repository
+curl -s https://packagecloud.io/install/repositories/sensu/beta/script.rpm.sh | bash
+
+# Add the InfluxDB YUM repository
+echo "[influxdb]
+name = InfluxDB Repository - RHEL \$releasever
+baseurl = https://repos.influxdata.com/rhel/\$releasever/\$basearch/stable
+enabled = 1
+gpgcheck = 1
+gpgkey = https://repos.influxdata.com/influxdb.key" | tee /etc/yum.repos.d/influxdb.repo
+
+# Add the Grafana YUM repository
+echo "[grafana]
+name=grafana
+baseurl=https://packagecloud.io/grafana/stable/el/7/\$basearch
+repo_gpgcheck=1
+enabled=1
+gpgcheck=1
+gpgkey=https://packagecloud.io/gpg.key https://grafanarel.s3.amazonaws.com/RPM-GPG-KEY-grafana
+sslverify=1
+sslcacert=/etc/pki/tls/certs/ca-bundle.crt" | tee /etc/yum.repos.d/grafana.repo
+
+# Add the EPEL repositories (for installing Redis)
+rpm -Uvh https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
+
+# Import GPG keys
+ curl -O https://repos.influxdata.com/influxdb.key
+ curl -O https://packagecloud.io/gpg.key
+ curl -O https://grafanarel.s3.amazonaws.com/RPM-GPG-KEY-grafana
+ cp influxdb.key gpg.key RPM-GPG-KEY-grafana /etc/pki/rpm-gpg/
+
+# Install our packages
+yum update
+yum install -y gcc git curl rubygems ruby-devel jq nc vim ntp sensu-cli sensu-backend sensu-agent influxdb grafana  nagios-plugins-ssh
+systemctl stop firewalld
+systemctl disable firewalld
+
+# Set grafana to port 4000 to not conflict with sensu dashboard
+sed -i 's/^;http_port = 3000/http_port = 4000/' /etc/grafana/grafana.ini
+
+# Install 1.x Sensu plugins
+gem install sensu-plugins-influxdb sensu-plugins-slack  sensu-translator bundler
+
+# Special 2.x shim plugin
+cp -r /vagrant/files/sensu-plugin /tmp/
+cd /tmp/sensu-plugin
+gem build sensu-plugin.gemspec
+gem install sensu-plugin-2.6.0.gem
+
+cp -r /vagrant/files/sensu-plugins-logs /tmp/
+cd /tmp/sensu-plugins-logs
+gem build sensu-plugins-logs.gemspec
+gem install sensu-plugins-logs-1.3.3.gem
+
+cd
+
+# Install the filter gRPC PoC
+cp /vagrant/files/sensu-1.x-filter-wrapper /tmp/
+
+# Make event log directories
+mkdir -p /var/log/sensu/events
+chown -R sensu:sensu /var/log/sensu
+
+# Copy Sensu configuration files
+cp -r /vagrant_files/sensu/* /etc/sensu/
+chmod +x /etc/sensu/plugins/*
+chown -R sensu:sensu /etc/sensu
+cp -r /vagrant_files/grafana/* /etc/grafana/
+chown -R grafana:grafana /etc/grafana
+
+
+# Configure the shell
+echo 'export PS1="demo $ "' >> ~/.bash_profile
+echo 'alias l="pwd"' >> ~/.bashrc
+echo 'alias ll="ls -Flag --color=auto"' >> ~/.bashrc
+
+# 
+
+
+# Enable services to start on boot
+systemctl start ntpd
+systemctl enable ntpd
+systemctl start sensu-backend
+systemctl enable sensu-backend
+
+echo "configuring sensuctl"
+sensuctl configure -n --username admin --password P@ssw0rd! --url http://127.0.0.1:8080
+sensuctl organization create "migration" --description "migrating 1.x to 2.x"
+sensuctl environment create "development" --description "for development"
+sensuctl config set-format "json"
+sensuctl config set-environment "development"
+sensuctl config set-organization "migration"
+
+sensuctl config view 
+
+
+systemctl start influxdb
+systemctl enable influxdb
+systemctl start grafana-server
+systemctl enable grafana-server.service
+systemctl start sensu-agent
+systemctl enable sensu-agent
+
+# Create the InfluxDB database
+influx -execute "CREATE DATABASE sensu;"
+
+# Print the VM IP Address and exit
+echo
+echo "This sandbox VM is up and running with the following network interfaces:"
+ip address
+echo "Happy Sensu-ing!"
