@@ -35,10 +35,22 @@ Vagrant.configure("2") do |config|
     # within the machine from a port on the host machine. In the example below,
     # accessing "localhost:8080" will access port 80 on the guest machine.
     # NOTE: This will enable public access to the opened port
-    centos.vm.network "forwarded_port", guest: 6379, host: 6380
-    centos.vm.network "forwarded_port", guest: 4567, host: 4568
+
+    # sensu-backend
+    centos.vm.network "forwarded_port", guest: 2379, host: 2379
+    centos.vm.network "forwarded_port", guest: 2380, host: 2380
+    centos.vm.network "forwarded_port", guest: 8080, host: 8080
+    centos.vm.network "forwarded_port", guest: 8081, host: 8081
+
+    # sensu-desktop
     centos.vm.network "forwarded_port", guest: 3000, host: 3001
+
+    # grafana
     centos.vm.network "forwarded_port", guest: 4000, host: 4001
+
+    # Agent
+    centos.vm.network "forwarded_port", guest: 3030, host: 3030
+    centos.vm.network "forwarded_port", guest: 3031, host: 3031
 
     # Create a forwarded port mapping which allows access to a specific port
     # within the machine from a port on the host machine and only allow access

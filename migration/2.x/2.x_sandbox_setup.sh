@@ -55,7 +55,8 @@ gem install sensu-plugins-logs-1.3.3.gem
 cd
 
 # Install the filter gRPC PoC
-cp /vagrant/files/sensu-1.x-filter-wrapper /tmp/
+cp /vagrant/files/sensu-1.x-filter-wrapper /home/vagrant/shim
+chown -R vagrant:vagrant /home/vagrant/shim
 
 # Make event log directories
 mkdir -p /var/log/sensu/events
@@ -83,15 +84,20 @@ systemctl enable ntpd
 systemctl start sensu-backend
 systemctl enable sensu-backend
 
-echo "configuring sensuctl"
+echo "configuring sensuctl for root"
 sensuctl configure -n --username admin --password P@ssw0rd! --url http://127.0.0.1:8080
 sensuctl organization create "migration" --description "migrating 1.x to 2.x"
 sensuctl environment create "development" --description "for development"
 sensuctl config set-format "json"
-sensuctl config set-environment "development"
-sensuctl config set-organization "migration"
-
 sensuctl config view 
+
+echo "configuring sensuctl for vagrant user"
+sudo -u vagrant sensuctl configure -n --username admin --password P@ssw0rd! --url http://127.0.0.1:8080
+sudo -u vagrant sensuctl config set-format "json"
+sudo -u vagrant sensuctl config set-environment "development"
+sudo -u vagrant sensuctl config set-organization "migration"
+
+sudo -u vagrant sensuctl config view 
 
 
 systemctl start influxdb
