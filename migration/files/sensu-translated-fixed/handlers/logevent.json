@@ -1,0 +1,10 @@
+{
+  "type":"Handler",
+  "spec":{
+    "name":"logevent",
+    "type":"pipe",
+    "command":"/usr/local/bin/handler-logevent.rb --enable-2.0-event",
+    "organization":"default",
+    "environment":"default"
+  }
+}
