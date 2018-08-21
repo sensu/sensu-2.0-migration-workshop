@@ -34,3 +34,6 @@ state-dir: "/var/lib/sensu"
 #initial-cluster-state: ""
 #initial-cluster-token: ""
 #name: ""
+
+
+log-level: "debug"
