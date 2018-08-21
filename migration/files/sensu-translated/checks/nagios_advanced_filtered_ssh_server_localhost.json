@@ -1,0 +1,19 @@
+{
+  "type":"Check",
+  "spec":{
+    "name":"nagios_advanced_filtered_ssh_server_localhost",
+    "command":"/usr/lib64/nagios/plugins/check_ssh -4 -r :::ssh.version|OpenSSH_7.4::: -P :::ssh.protocol|2.0::: localhost",
+    "type":"metric",
+    "handlers":[
+      "advanced_filtered_logevent"
+    ],
+    "interval":10,
+    "timeout":15,
+    "subscriptions":[
+      "localhost"
+    ],
+    "publish":true,
+    "organization":"default",
+    "environment":"default"
+  }
+}

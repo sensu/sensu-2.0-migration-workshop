@@ -42,12 +42,12 @@ sed -i 's/^;http_port = 3000/http_port = 4000/' /etc/grafana/grafana.ini
 gem install sensu-plugins-influxdb sensu-plugins-slack  sensu-translator bundler
 
 # Special 2.x shim plugin
-cp -r /vagrant/files/sensu-plugin /tmp/
+cp -r /vagrant_files/sensu-plugin /tmp/
 cd /tmp/sensu-plugin
 gem build sensu-plugin.gemspec
 gem install sensu-plugin-2.6.0.gem
 
-cp -r /vagrant/files/sensu-plugins-logs /tmp/
+cp -r /vagrant_files/sensu-plugins-logs /tmp/
 cd /tmp/sensu-plugins-logs
 gem build sensu-plugins-logs.gemspec
 gem install sensu-plugins-logs-1.3.3.gem
@@ -55,7 +55,7 @@ gem install sensu-plugins-logs-1.3.3.gem
 cd
 
 # Install the filter gRPC PoC
-cp /vagrant/files/sensu-1.x-filter-wrapper /home/vagrant/shim
+cp -r /vagrant_files/sensu-1.x-filter-wrapper /home/vagrant/shim
 chown -R vagrant:vagrant /home/vagrant/shim
 
 # Make event log directories
@@ -94,8 +94,6 @@ sensuctl config view
 echo "configuring sensuctl for vagrant user"
 sudo -u vagrant sensuctl configure -n --username admin --password P@ssw0rd! --url http://127.0.0.1:8080
 sudo -u vagrant sensuctl config set-format "json"
-sudo -u vagrant sensuctl config set-environment "development"
-sudo -u vagrant sensuctl config set-organization "migration"
 
 sudo -u vagrant sensuctl config view 
 

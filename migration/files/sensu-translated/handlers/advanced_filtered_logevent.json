@@ -1,0 +1,11 @@
+{
+  "type":"Handler",
+  "spec":{
+    "name":"advanced_filtered_logevent",
+    "type":"pipe",
+    "filter":"advanced_filter",
+    "command":"handler-logevent.rb",
+    "organization":"default",
+    "environment":"default"
+  }
+}

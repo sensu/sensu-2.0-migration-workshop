@@ -1,0 +1,11 @@
+{
+  "type":"Handler",
+  "spec":{
+    "name":"silence_outside_office_hours_logevent",
+    "type":"pipe",
+    "filter":"silence_outside_office_hours",
+    "command":"handler-logevent.rb",
+    "organization":"default",
+    "environment":"default"
+  }
+}
