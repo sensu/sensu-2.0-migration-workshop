@@ -61,6 +61,8 @@ chown -R vagrant:vagrant /home/vagrant/shim
 # Make event log directories
 mkdir -p /var/log/sensu/events
 chown -R sensu:sensu /var/log/sensu
+mkdir -p /opt/sensu
+chown -R sensu:sensu /opt/sensu
 
 # Copy Sensu configuration files
 cp -r /vagrant_files/sensu/* /etc/sensu/
