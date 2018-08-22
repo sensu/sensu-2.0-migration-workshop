@@ -50,6 +50,7 @@ sed -i 's/^;http_port = 3000/http_port = 4000/' /etc/grafana/grafana.ini
 sensu-install -p influxdb
 sensu-install -p logs
 sensu-install -p slack 
+sensu-install -p sensu-plugins-cpu-checks
 
 # Make event log directories
 mkdir -p /var/log/sensu/events

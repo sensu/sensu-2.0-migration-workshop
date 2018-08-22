@@ -2,7 +2,6 @@
   "handlers": {
     "influx-tcp": {
       "type": "pipe",
-      "mutator": "influxdb_line_protocol", 
       "command": "/opt/sensu/embedded/bin/metrics-influxdb.rb"
     }
   }
