@@ -9,7 +9,7 @@
       "influx-tcp"
     ],
     "subscriptions":[
-      "dev"
+      "localhost"
     ],
     "publish":true,
     "organization":"default",
