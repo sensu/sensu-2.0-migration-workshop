@@ -39,7 +39,7 @@ systemctl disable firewalld
 sed -i 's/^;http_port = 3000/http_port = 4000/' /etc/grafana/grafana.ini
 
 # Install 1.x Sensu plugins
-gem install sensu-plugins-influxdb sensu-plugins-slack  sensu-translator bundler
+gem install sensu-plugins-influxdb sensu-plugins-slack  sensu-translator bundler 
 
 # Special 2.x shim plugin
 cp -r /vagrant_files/sensu-plugin /tmp/
@@ -51,6 +51,17 @@ cp -r /vagrant_files/sensu-plugins-logs /tmp/
 cd /tmp/sensu-plugins-logs
 gem build sensu-plugins-logs.gemspec
 gem install sensu-plugins-logs-1.3.3.gem
+
+cp -r /vagrant_files/sensu-plugins-cpu-checks /tmp/
+cd /tmp/sensu-plugins-cpu-checks
+gem build sensu-plugins-cpu-checks
+gem install sensu-plugins-cpu-checks-3.0.0.gem
+
+# Install the golang influxdb handler
+cd /tmp
+wget https://github.com/nikkiki/sensu-influxdb-handler/releases/download/v1.5/sensu-influxdb-handler_1.5_linux_amd64.tar.gz
+tar xvzf sensu-influxdb-handler_1.5_linux_amd64.tar.gz
+cp sensu-influxdb-handler /usr/local/bin/
 
 cd
 
@@ -70,6 +81,8 @@ chmod +x /etc/sensu/plugins/*
 chown -R sensu:sensu /etc/sensu
 cp -r /vagrant_files/grafana/* /etc/grafana/
 chown -R grafana:grafana /etc/grafana
+cp -r /vagrant_files/var/lib/grafana/dashboards /var/lib/grafana
+chown -R grafana:grafana /var/lib/grafana
 
 
 # Configure the shell
