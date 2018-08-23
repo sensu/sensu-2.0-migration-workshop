@@ -87,7 +87,7 @@
           "groupBy": [
             {
               "params": [
-                "$__interval"
+                "1m"
               ],
               "type": "time"
             },
