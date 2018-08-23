@@ -63,7 +63,8 @@ chmod +x /etc/sensu/plugins/*
 chown -R sensu:sensu /etc/sensu
 cp -r /vagrant_files/grafana/* /etc/grafana/
 chown -R grafana:grafana /etc/grafana
-
+cp -r /vagrant_files/var/lib/grafana/dashboards /var/lib/grafana
+chown -R grafana:grafana /var/lib/grafana
 
 # Configure the shell
 echo 'export PS1="demo $ "' >> ~/.bash_profile
