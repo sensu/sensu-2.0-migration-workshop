@@ -54,7 +54,7 @@ gem install sensu-plugins-logs-1.3.3.gem
 
 cp -r /vagrant_files/sensu-plugins-cpu-checks /tmp/
 cd /tmp/sensu-plugins-cpu-checks
-gem build sensu-plugins-cpu-checks
+gem build sensu-plugins-cpu-checks.gemspec
 gem install sensu-plugins-cpu-checks-3.0.0.gem
 
 # Install the golang influxdb handler
