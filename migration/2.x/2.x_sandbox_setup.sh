@@ -107,10 +107,9 @@ sensuctl config set-format "json"
 sensuctl config view 
 
 echo "configuring sensuctl for vagrant user"
-sudo -u vagrant sensuctl configure -n --username admin --password P@ssw0rd! --url http://127.0.0.1:8080
-sudo -u vagrant sensuctl config set-format "json"
-
-sudo -u vagrant sensuctl config view 
+sudo -i -u vagrant sensuctl configure -n --username admin --password P@ssw0rd! --url http://127.0.0.1:8080
+sudo -i -u vagrant sensuctl config set-format "json"
+sudo -i -u vagrant sensuctl config view 
 
 
 systemctl start influxdb
