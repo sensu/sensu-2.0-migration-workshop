@@ -7,3 +7,6 @@
 [submodule "migration/files/sensu-plugin"]
 	path = migration/files/sensu-plugin
 	url = https://github.com/jspaleta/sensu-plugin.git
+[submodule "migration/files/sensu-plugins-cpu-checks"]
+	path = migration/files/sensu-plugins-cpu-checks
+	url = https://github.com/jspaleta/sensu-plugins-cpu-checks.git
