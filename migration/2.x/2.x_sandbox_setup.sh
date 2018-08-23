@@ -59,7 +59,7 @@ gem install sensu-plugins-cpu-checks-3.0.0.gem
 
 # Install the golang influxdb handler
 cd /tmp
-wget https://github.com/nikkiki/sensu-influxdb-handler/releases/download/v1.5/sensu-influxdb-handler_1.5_linux_amd64.tar.gz
+wget -nv https://github.com/nikkiki/sensu-influxdb-handler/releases/download/v1.5/sensu-influxdb-handler_1.5_linux_amd64.tar.gz
 tar xvzf sensu-influxdb-handler_1.5_linux_amd64.tar.gz
 cp sensu-influxdb-handler /usr/local/bin/
 
