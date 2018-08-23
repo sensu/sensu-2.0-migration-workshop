@@ -2,7 +2,7 @@
 ##
 # agent configuration
 ##
-id: "sensu_2.x_migration_agent"
+id: "sensu_2_x_migration_agent"
 organization: "default"
 environment: "default"
 subscriptions: ["proxy-request","localhost","dev"]

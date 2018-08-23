@@ -5,14 +5,16 @@
     "type":"metric",
     "command":"metrics-cpu-pcnt-usage.rb",
     "interval":10,
-    "handlers":[
-      "influx-tcp"
-    ],
     "subscriptions":[
       "localhost"
     ],
     "publish":true,
     "organization":"default",
-    "environment":"default"
+    "environment":"default",
+    "output_metric_format": "graphite_plaintext",
+    "output_metric_handlers": [
+      "influx-tcp"
+    ]
+
   }
 }

@@ -1,0 +1,10 @@
+{
+  "type":"Handler",
+  "spec":{
+    "name":"influx-tcp",
+    "type":"pipe",
+    "command": "sensu-influxdb-handler --addr http://localhost:8086 --username root --password root --db-name sensu",
+    "organization":"default",
+    "environment":"default"
+  }
+}
